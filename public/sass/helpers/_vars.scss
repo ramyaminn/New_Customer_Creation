@@ -1,0 +1,98 @@
+@keyframes fadeIn {
+    100% {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@mixin SecondFont {
+    font-family: 'Arbutus Slab', serif;
+}
+@mixin ThirdFont {
+    font-family: 'Lora', serif;
+    body.rtl &{
+        font-family: 'Cairo', sans-serif;
+    }
+}
+@mixin RobotoFont {
+    font-family: 'Roboto', sans-serif;
+}
+
+@mixin ArFont {
+    font-family: 'Cairo', sans-serif;
+}
+
+@mixin PoFull {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+@mixin BGFull {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+@mixin userSelect {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+@mixin transition($what:all, $time:0.2s, $how:ease-in-out) {
+    -webkit-transition: $what $time $how;
+    -moz-transition: $what $time $how;
+    -ms-transition: $what $time $how;
+    -o-transition: $what $time $how;
+    transition: $what $time $how;
+}
+
+
+@mixin FlipH {
+    -moz-transform: scaleX(-1);
+    -o-transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+}
+
+@mixin FlipV {
+    -moz-transform: scaleY(-1);
+    -o-transform: scaleY(-1);
+    -webkit-transform: scaleY(-1);
+    transform: scaleY(-1);
+}
+
+@mixin MaterialFamily {
+    font-family: "Material Icons" !important;
+    text-rendering: optimizeLegibility;
+    -webkit-font-feature-settings: 'liga' 1;
+    font-feature-settings: 'liga' 1;
+    font-style: normal;
+    text-transform: none;
+    display: inline-block;
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+}
+
+// generic transform
+@mixin transform($transforms) {
+    -moz-transform: $transforms;
+    -o-transform: $transforms;
+    -ms-transform: $transforms;
+    -webkit-transform: $transforms;
+    transform: $transforms;
+}
+
+// translate
+@mixin translate ($x, $y) {
+    @include transform(translate($x, $y));
+}
+
+// scale
+@mixin scale($scale) {
+    @include transform(scale($scale));
+}
