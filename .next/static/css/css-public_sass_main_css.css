@@ -665,6 +665,76 @@ a {
 .page .box.active {
   display: block;
 }
+.page .box .search_input {
+  display: flex;
+  align-items: center;
+  max-width: 500px;
+  margin: 30px auto;
+}
+.page .box .search_input input {
+  background-color: #ffffff;
+  border: 1px solid rgba(217, 2, 125, 0.2784313725);
+  border-radius: 8px 0 0 8px;
+  padding: 10px 15px;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 22px;
+  color: #000000;
+  width: 100%;
+  transition: all 0.3s ease;
+}
+.page .box .search_input input:focus {
+  border: 1px solid #d9027d;
+}
+.page .box .search_input .btn_search {
+  width: 200px;
+  margin: 0 auto;
+  padding: 13px 20px;
+  text-align: center;
+  color: white;
+  font-size: 18px;
+  font-weight: 700;
+  background: #d9027d;
+  border-radius: 0 8px 8px 0;
+  transition: all 0.3s ease;
+}
+.page .box .search_input .btn_search:hover {
+  background: #d3027a;
+}
+.page .box table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.page .box th, .page .box td {
+  padding: 8px;
+  text-align: left;
+  border-top: 1px solid #ddd;
+}
+.page .box tr:first-child td {
+  border-top: 0;
+}
+.page .box th {
+  background-color: #f2f2f2;
+}
+.page .box .list .sec_empty p {
+  text-align: center;
+  padding: 30px 0;
+  font-size: 18px;
+}
+.page .box .list .sec_empty .btn_show.empty {
+  display: block;
+  text-align: center;
+  font-size: 17px;
+  font-weight: 900;
+  color: white;
+  background: black;
+  border: 1px solid;
+  border-radius: 12px;
+  padding: 15px;
+  max-width: 250px;
+  margin: 0 auto;
+}
 .page .box form {
   padding: 20px;
 }
@@ -733,76 +803,6 @@ a {
   background: black;
   border-radius: 10px;
   transition: all 0.3s ease;
-}
-.page .box form .search_input {
-  display: flex;
-  align-items: center;
-  max-width: 500px;
-  margin: 30px auto;
-}
-.page .box form .search_input input {
-  background-color: #ffffff;
-  border: 1px solid rgba(217, 2, 125, 0.2784313725);
-  border-radius: 8px 0 0 8px;
-  padding: 10px 15px;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 22px;
-  color: #000000;
-  width: 100%;
-  transition: all 0.3s ease;
-}
-.page .box form .search_input input:focus {
-  border: 1px solid #d9027d;
-}
-.page .box form .search_input .btn_search {
-  width: 200px;
-  margin: 0 auto;
-  padding: 13px 20px;
-  text-align: center;
-  color: white;
-  font-size: 18px;
-  font-weight: 700;
-  background: #d9027d;
-  border-radius: 0 8px 8px 0;
-  transition: all 0.3s ease;
-}
-.page .box form .search_input .btn_search:hover {
-  background: #d3027a;
-}
-.page .box form table {
-  width: 100%;
-  border-collapse: collapse;
-}
-.page .box form th, .page .box form td {
-  padding: 8px;
-  text-align: left;
-  border-top: 1px solid #ddd;
-}
-.page .box form tr:first-child td {
-  border-top: 0;
-}
-.page .box form th {
-  background-color: #f2f2f2;
-}
-.page .box form .list .sec_empty p {
-  text-align: center;
-  padding: 30px 0;
-  font-size: 18px;
-}
-.page .box form .list .sec_empty .btn_show.empty {
-  display: block;
-  text-align: center;
-  font-size: 17px;
-  font-weight: 900;
-  color: white;
-  background: black;
-  border: 1px solid;
-  border-radius: 12px;
-  padding: 15px;
-  max-width: 250px;
-  margin: 0 auto;
 }
 
 /*# sourceMappingURL=main.css.map */
