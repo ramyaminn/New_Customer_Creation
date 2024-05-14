@@ -17,6 +17,6 @@ psd
 thumb
 sketch
 
-/app/api.txt
+/app/api.tsx
 
 # End of https://www.toptal.com/developers/gitignore/api/react
