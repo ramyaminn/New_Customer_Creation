@@ -20,10 +20,11 @@
 
 body,
 html {
-  background: $base;
+  // background: $base;
   color: black;
   font: 400 16px/1 "Lato", sans-serif;
   // overflow-x: hidden;
+  height: 100%;
   position: relative;
   .ng-star-inserted {
     display: none !important;

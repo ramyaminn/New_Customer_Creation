@@ -523,9 +523,9 @@ input[type=number] {
 
 body,
 html {
-  background: #d9027d;
   color: black;
   font: 400 16px/1 "Lato", sans-serif;
+  height: 100%;
   position: relative;
 }
 body .ng-star-inserted,
@@ -617,12 +617,17 @@ a {
   opacity: 1;
 }
 
+.page {
+  background: #d9027d;
+  height: 100%;
+}
 .page .top {
   text-align: center;
   padding-top: 50px;
 }
 .page .top img {
-  max-width: 200px;
+  width: 200px;
+  margin: auto;
 }
 .page .board {
   max-width: 800px;
@@ -658,6 +663,7 @@ a {
 }
 .page .box {
   display: none;
+  padding-top: 30px;
 }
 .page .box.active {
   display: block;
@@ -666,7 +672,7 @@ a {
   display: flex;
   align-items: center;
   max-width: 500px;
-  margin: 30px auto;
+  margin: 0 auto 20px;
 }
 .page .box .search_input input {
   background-color: #ffffff;
@@ -733,7 +739,7 @@ a {
   margin: 0 auto;
 }
 .page .box form {
-  padding: 20px;
+  padding: 0 20px 20px;
 }
 .page .box form .all_input {
   display: flex;
@@ -790,6 +796,225 @@ a {
   padding-top: 20px;
 }
 .page .box form .btn {
+  width: 200px;
+  margin: 15px auto;
+  padding: 14px 20px;
+  text-align: center;
+  color: white;
+  font-size: 18px;
+  font-weight: 700;
+  background: black;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+.page .box .sec_error {
+  padding-bottom: 15px;
+}
+.page .box .sec_error p {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 700;
+  width: 100%;
+  background: #fddfdf;
+  color: #5f3f3f;
+  border-radius: 8px;
+  padding: 10px 15px;
+  max-width: 500px;
+  margin: 0 auto;
+}
+.page .box .sec_successfully {
+  padding-bottom: 15px;
+}
+.page .box .sec_successfully p {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 700;
+  width: 100%;
+  background: #dffde5;
+  color: black;
+  border-radius: 8px;
+  padding: 10px 15px;
+  max-width: 500px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.page-demo .top {
+  text-align: center;
+  padding: 30px 0;
+  background: #d9027d;
+}
+.page-demo .top img {
+  width: 200px;
+  margin: auto;
+}
+.page-demo .board {
+  max-width: 800px;
+  margin: 50px auto;
+  border-radius: 8px;
+  background: white;
+  padding: 20px;
+}
+.page-demo .board ul {
+  display: flex;
+  align-items: center;
+}
+.page-demo .board ul li {
+  width: 50%;
+  text-align: center;
+}
+.page-demo .board ul li a {
+  color: black;
+  font-weight: 800;
+  font-size: 20px;
+  padding: 20px;
+  display: block;
+  border-bottom: 2px solid black;
+  transition: all 0.3s ease;
+}
+.page-demo .board ul li a:hover {
+  color: white;
+  background: black;
+}
+.page-demo .board ul li a.active {
+  color: white;
+  background: black;
+}
+.page-demo .box {
+  display: none;
+  padding: 30px 0;
+}
+.page-demo .box.active {
+  display: block;
+}
+.page-demo .box .search_input {
+  display: flex;
+  align-items: center;
+  max-width: 500px;
+  margin: auto;
+}
+.page-demo .box .search_input input {
+  background-color: #ffffff;
+  border: 1px solid rgba(217, 2, 125, 0.2784313725);
+  border-radius: 8px 0 0 8px;
+  padding: 10px 15px;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 22px;
+  color: #000000;
+  width: 100%;
+  transition: all 0.3s ease;
+}
+.page-demo .box .search_input input:focus {
+  border: 1px solid #d9027d;
+}
+.page-demo .box .search_input .btn_search {
+  width: 200px;
+  margin: 0 auto;
+  padding: 13px 20px;
+  text-align: center;
+  color: white;
+  font-size: 18px;
+  font-weight: 700;
+  background: #d9027d;
+  border-radius: 0 8px 8px 0;
+  transition: all 0.3s ease;
+}
+.page-demo .box .search_input .btn_search:hover {
+  background: #d3027a;
+}
+.page-demo .box table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.page-demo .box th, .page-demo .box td {
+  padding: 8px;
+  text-align: left;
+  border-top: 1px solid #ddd;
+}
+.page-demo .box tr:first-child td {
+  border-top: 0;
+}
+.page-demo .box th {
+  background-color: #f2f2f2;
+}
+.page-demo .box .list .sec_empty p {
+  text-align: center;
+  padding: 30px 0;
+  font-size: 18px;
+}
+.page-demo .box .list .sec_empty .btn_show.empty {
+  display: block;
+  text-align: center;
+  font-size: 17px;
+  font-weight: 900;
+  color: white;
+  background: black;
+  border: 1px solid;
+  border-radius: 12px;
+  padding: 15px;
+  max-width: 250px;
+  margin: 0 auto;
+}
+.page-demo .box form {
+  padding: 0 20px;
+}
+.page-demo .box form .all_input {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.page-demo .box form .all_input .s_row {
+  padding: 15px;
+  width: 50%;
+}
+@media screen and (max-width: 767px) {
+  .page-demo .box form .all_input .s_row {
+    width: 100%;
+  }
+}
+.page-demo .box form .all_input .s_row label {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 19px;
+  color: #000000;
+  padding-bottom: 6px;
+}
+.page-demo .box form .all_input .s_row input {
+  background-color: #ffffff;
+  border: 1px solid rgba(217, 2, 125, 0.2784313725);
+  border-radius: 5px;
+  padding: 10px 15px;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 22px;
+  color: #000000;
+  width: 100%;
+  transition: all 0.3s ease;
+}
+.page-demo .box form .all_input .s_row input:focus {
+  border: 1px solid #d9027d;
+}
+.page-demo .box form .all_input .s_row span {
+  font-weight: 300;
+  font-size: 12px;
+  line-height: 16px;
+  text-align: left;
+  color: #50535a;
+  display: block;
+  cursor: pointer;
+}
+.page-demo .box form .all_input .s_row span:hover {
+  text-decoration: underline;
+}
+.page-demo .box form .all_input .s_row ~ .row {
+  padding-top: 20px;
+}
+.page-demo .box form .btn {
   width: 200px;
   margin: 15px auto;
   padding: 14px 20px;
