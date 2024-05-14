@@ -1,1 +1,0 @@
-export const API_ENDPOINT_customers = "http://192.168.19.35:8081/customers";

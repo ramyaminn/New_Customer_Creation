@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import logo from '../../public/img/carina_logo.png';
 import '../../public/sass/main.css';
-import { API_ENDPOINT_customers } from '../api';
+import { API_ENDPOINT_customers } from '../../general/api';
 
 export default function Page() {
   const [activeSection, setActiveSection] = useState('1');
