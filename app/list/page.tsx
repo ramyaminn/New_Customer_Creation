@@ -29,6 +29,7 @@ export default function Page() {
   };
 
   const isValidString = (str: string | any[]) => str.length >= 11;
+
   const handleSearch = async (e: any) => {
       
       setSearchResult('');
@@ -37,12 +38,7 @@ export default function Page() {
 
       if (searchValue.length !== 11 || !isValidString(searchValue)) {
         setSectionError('<div class="sec_error"><p>should have at least 11 characters.</p></div>');
-        setShowError(true);
-  
-        // setTimeout(() => {
-        //   setShowError(false);
-        // }, 2500);
-  
+        setShowError(true);  
         return { success: false, message: 'Invalid input' };
       }
 
@@ -72,7 +68,7 @@ export default function Page() {
   
 
   const handleFormSubmit = async (e: any) => {
-    e.preventDefault(); // Prevent default form submission behavior
+    e.preventDefault();
   
     try {
       const response = await fetch(`${API_ENDPOINT_customers}/create`, {
@@ -80,75 +76,56 @@ export default function Page() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData), // Send form data as JSON
+        body: JSON.stringify(formData), 
       });
       const responseData = await response.json();
   
       if (response.status === 201) {
-        // Account created successfully
         console.log('Account created:', responseData);
-        // Optionally, reset the form data after successful submission
+        
         setFormData({
           firstname: '',
           lastname: '',
           emailaddress: '',
           phonenumber: '',
         });
-        // Set the success message
         setFormErrorMessage('<div class="sec_successfully"><p>Account created successfully</p></div>');
-        // Set a timeout to hide the error message after 5 seconds
         setTimeout(() => {
           setFormErrorMessage('');
         }, 5000);
 
         return { success: true, message: 'Account created successfully' };
       } else if (response.status === 422) {
-        // Check specific error messages
         if (responseData.detail === 'PhoneNumber Already Exist!') {
-          // Set error message for phone number already exists
           setFormErrorMessage('<div class="sec_error"><p>PhoneNumber Already Exists!</p></div>');
-            // Set a timeout to hide the error message after 5 seconds
             setTimeout(() => {
               setFormErrorMessage('');
             }, 5000);
           return { success: false, message: 'PhoneNumber Already Exists!' };
        
         } else if (response.status === 422) {
-          // Check specific error messages
           if (responseData.detail && responseData.detail.length > 0) {
-            // Loop through each error detail object
             for (const errorDetail of responseData.detail) {
               if (errorDetail.msg === 'String should have at least 11 characters') {
-                // Set error message for string length validation
                 setFormErrorMessage('<div class="sec_error"><p>String should have at least 11 characters.</p></div>');
 
-+               // Set a timeout to hide the error message after 5 seconds
                 setTimeout(() => {
                   setFormErrorMessage('');
                 }, 5000);
 
                 return { success: false, message: 'String should have at least 11 characters' };
               }
-              // Add more conditions to handle other specific error messages if needed
             }
           }
         }
       }
     } catch (error) {
       console.error('Error creating account:', error);
-      // Set a generic form submission error message for network errors
       setFormErrorMessage('Error creating account');
       return { success: false, message: 'Error creating account' };
     }
   };
-  
-  
-  
-  
-  
-  
-
-  
+ 
   return (
     <main className="page">
         <div className="top">

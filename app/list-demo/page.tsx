@@ -1,9 +1,9 @@
-
 "use client"
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import logo from '../../public/img/carina_logo.png';
 import '../../public/sass/main.css';
+import { API_ENDPOINT_customers } from '../../general/api';
 
 export default function Page() {
   const [activeSection, setActiveSection] = useState('1');
@@ -11,7 +11,13 @@ export default function Page() {
   const [searchResult, setSearchResult] = useState('');
   const [sectionError, setSectionError] = useState('');
   const [showError, setShowError] = useState(false);
-  
+  const [formErrorMessage, setFormErrorMessage] = useState('');
+  const [formData, setFormData] = useState({
+    firstname: '',
+    lastname: '',
+    emailaddress: '',
+    phonenumber: '',
+  });
 
   const handleButtonClick = (sectionId = '') => {
     setActiveSection(sectionId);
@@ -22,34 +28,23 @@ export default function Page() {
     setSearchValue(value);
   };
 
- 
   const isValidString = (str: string | any[]) => str.length >= 11;
 
-  const handleSearch = async (e: React.MouseEvent<HTMLButtonElement>) => {
-      // Validate input length
-      //   if (searchValue.length !== 11 || !isValidString(searchValue)) {
-      //     setSectionError('<div class="sec_error"><p>should have at least 11 characters.</p></div>');
-      //   return { success: false, message: 'Invalid input' };
-      // }
+  const handleSearch = async (e: any) => {
+      
       setSearchResult('');
       setSectionError('');
       setShowError(false);
 
       if (searchValue.length !== 11 || !isValidString(searchValue)) {
         setSectionError('<div class="sec_error"><p>should have at least 11 characters.</p></div>');
-        setShowError(true);
-  
-        // setTimeout(() => {
-        //   setShowError(false);
-        // }, 2500);
-  
+        setShowError(true);  
         return { success: false, message: 'Invalid input' };
       }
 
 
-
     try {
-      const response = await fetch(`http://192.168.19.35:8081/customers/${searchValue}`);
+      const response = await fetch(`${API_ENDPOINT_customers}/${searchValue}`);
       const responseData  = await response.json();
       
       if (response.status === 200) {
@@ -68,10 +63,69 @@ export default function Page() {
       setSearchResult('Error fetching data server');
       return { success: false, message: 'Error fetching data' };
     }
-  }; 
-  
+  };
+
   
 
+  const handleFormSubmit = async (e: any) => {
+    e.preventDefault();
+  
+    try {
+      const response = await fetch(`${API_ENDPOINT_customers}/create`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData), 
+      });
+      const responseData = await response.json();
+  
+      if (response.status === 201) {
+        console.log('Account created:', responseData);
+        
+        setFormData({
+          firstname: '',
+          lastname: '',
+          emailaddress: '',
+          phonenumber: '',
+        });
+        setFormErrorMessage('<div class="sec_successfully"><p>Account created successfully</p></div>');
+        setTimeout(() => {
+          setFormErrorMessage('');
+        }, 5000);
+
+        return { success: true, message: 'Account created successfully' };
+      } else if (response.status === 422) {
+        if (responseData.detail === 'PhoneNumber Already Exist!') {
+          setFormErrorMessage('<div class="sec_error"><p>PhoneNumber Already Exists!</p></div>');
+            setTimeout(() => {
+              setFormErrorMessage('');
+            }, 5000);
+          return { success: false, message: 'PhoneNumber Already Exists!' };
+       
+        } else if (response.status === 422) {
+          if (responseData.detail && responseData.detail.length > 0) {
+            for (const errorDetail of responseData.detail) {
+              if (errorDetail.msg === 'String should have at least 11 characters') {
+                setFormErrorMessage('<div class="sec_error"><p>String should have at least 11 characters.</p></div>');
+
+                setTimeout(() => {
+                  setFormErrorMessage('');
+                }, 5000);
+
+                return { success: false, message: 'String should have at least 11 characters' };
+              }
+            }
+          }
+        }
+      }
+    } catch (error) {
+      console.error('Error creating account:', error);
+      setFormErrorMessage('Error creating account');
+      return { success: false, message: 'Error creating account' };
+    }
+  };
+ 
   return (
     <main className="page-demo">
         <div className="top">
@@ -116,9 +170,6 @@ export default function Page() {
                   <button className="btn_search" onClick={handleSearch}>
                     Search
                   </button>
-
-              
-              
               </div>
               <div className="list" id="result"  dangerouslySetInnerHTML={{ __html: searchResult }}>
                   {/* {searchResult} */}
@@ -126,26 +177,46 @@ export default function Page() {
           
           </div>
           <div className={`box ${activeSection === '2' ? 'active' : ''}`} id="2">
+            {formErrorMessage && (
+              <div dangerouslySetInnerHTML={{ __html: formErrorMessage }} />
+            )}
             <form action="">
               <div className="all_input">
                 <div className="s_row">
                   <label htmlFor="">First Name</label>
-                  <input type="text" />
+                  <input
+                      type="text"
+                      value={formData.firstname}
+                      onChange={(e) => setFormData({ ...formData, firstname: e.target.value })}
+                  />
                 </div>
                 <div className="s_row">
                   <label htmlFor="">Last Name</label>
-                  <input type="text" />
+                  <input
+                    type="text"
+                    value={formData.lastname}
+                    onChange={(e) => setFormData({ ...formData, lastname: e.target.value })}
+                  />
                 </div>
                 <div className="s_row">
                   <label htmlFor="">Email</label>
-                  <input type="email" />
+                  <input
+                    type="email"
+                    value={formData.emailaddress}
+                    onChange={(e) => setFormData({ ...formData, emailaddress: e.target.value })}
+                  />
                 </div>
                 <div className="s_row">
                   <label htmlFor="">Phone Number</label>
-                  <input type="number" />
+                  <input
+                    type="number"
+                    value={formData.phonenumber}
+                    onChange={(e) => setFormData({ ...formData, phonenumber: e.target.value })}
+                  />
                 </div>
+                
               </div>
-              <button className="btn">New Account</button>
+              <button className="btn" onClick={handleFormSubmit}>New Account</button>
             </form>
           </div>
         </div>
