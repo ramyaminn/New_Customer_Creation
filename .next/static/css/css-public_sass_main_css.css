@@ -93,7 +93,7 @@ input[type=number] {
 body,
 html {
   color: black;
-  font: 400 16px/1 "Lato", sans-serif;
+  font: 400 16px/1 "Montserrat", sans-serif;
   height: 100%;
   position: relative;
 }
@@ -104,7 +104,7 @@ html .ng-star-inserted {
 
 body {
   direction: ltr;
-  font-family: "Lato", sans-serif;
+  font-family: "Montserrat", sans-serif;
 }
 
 .site-main {
@@ -183,16 +183,23 @@ a {
 }
 
 .page {
-  background: #d9027d;
   height: 100%;
 }
 .page .top {
+  background: #d9027d;
   text-align: center;
-  padding-top: 50px;
+  padding: 25px 20px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 .page .top img {
   width: 200px;
-  margin: auto;
+}
+.page .top h2 {
+  font-size: 30px;
+  color: white;
+  font-weight: 500;
 }
 .page .board {
   max-width: 800px;
@@ -204,31 +211,38 @@ a {
 .page .board ul {
   display: flex;
   align-items: center;
+  column-gap: 5px;
+  margin-bottom: -5px;
+  height: 49px;
 }
 .page .board ul li {
-  width: 50%;
   text-align: center;
 }
 .page .board ul li a {
   color: black;
-  font-weight: 800;
-  font-size: 20px;
-  padding: 20px;
+  font-weight: 700;
+  font-size: 18px;
+  padding: 15px 50px;
   display: block;
-  border-bottom: 2px solid black;
   transition: all 0.3s ease;
+  border-radius: 12px 12px 0 0;
+  background: rgba(217, 2, 125, 0.0588235294);
 }
 .page .board ul li a:hover {
-  color: white;
-  background: black;
+  color: #d9027d;
+  background: rgba(217, 2, 125, 0.1803921569);
 }
 .page .board ul li a.active {
-  color: white;
-  background: black;
+  color: #d9027d;
+  background: rgba(217, 2, 125, 0.1803921569);
+  margin-top: -10px;
 }
 .page .box {
   display: none;
-  padding-top: 30px;
+  padding: 50px 0;
+  background: #f8d1e8;
+  border-radius: 0 12px 12px 12px;
+  position: relative;
 }
 .page .box.active {
   display: block;

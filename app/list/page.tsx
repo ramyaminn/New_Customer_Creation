@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from 'react';
 import Image from 'next/image';
-import logo from '../../public/img/carina_logo.png';
+import logo from '../../public/img/unnamed-white.png';
 import '../../public/sass/main.css';
 import { handleSearch, handleFormSubmit, handleButtonClick, handleInputChange } from '../../general/apiHandlers';
 
@@ -22,7 +22,8 @@ export default function Page() {
   return (
     <main className="page">
       <div className="top">
-        <Image src={logo} alt="" width={100} height={100} />
+        <Image src={logo} alt="" width={400} height={93} />
+        <h2>Customer Creation</h2>
       </div>
       <div className="board">
         <nav>

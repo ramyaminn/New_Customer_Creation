@@ -1,12 +1,20 @@
 .page{
-    background: #d9027d;
     height: 100%;
     .top{
+            background: #d9027d;
             text-align: center;
-            padding-top: 50px;         
+            padding: 25px 20px 20px; 
+            display: flex;
+            align-items: center;
+            justify-content: space-between;        
        img{
             width: 200px;
-            margin: auto;
+            // margin: auto;
+       }
+       h2{
+        font-size: 30px;
+        color: white;
+        font-weight: 500;
        }
     }
     .board{
@@ -18,25 +26,31 @@
         ul{
             display: flex;
             align-items: center;
+            column-gap: 5px;
+            margin-bottom: -5px;
+            height: 49px;
             li{
-                width: calc(100% / 2);
                 text-align: center;
                 
                 a{
                     color: black;
-                    font-weight: 800;
-                    font-size: 20px;
-                    padding: 20px;
+                    font-weight: 700;
+                    font-size: 18px;
+                    padding: 15px 50px;
                     display: block;
-                    border-bottom: 2px solid black;
+                    // border: 2px solid #d9027d0f;
+                    // border-bottom: 0;
                     transition: all 0.3s ease;
+                    border-radius: 12px 12px 0 0;
+                    background: #d9027d0f;
                     &:hover{
-                        color: white;
-                        background: black;
+                        color: #d9027d;
+                        background: #d9027d2e;
                     }
                     &.active{
-                        color: white;
-                        background: black;
+                        color: #d9027d;
+                        background: #d9027d2e;
+                        margin-top: -10px;
                     }
                 }
             }
@@ -44,7 +58,11 @@
     }
     .box{
         display: none;
-        padding-top: 30px;
+        padding: 50px 0;
+        // border: 2px solid #d9027d0f;
+        background: #f8d1e8;
+        border-radius: 0 12px 12px 12px;
+        position: relative;
         &.active{
             display: block;
         }
