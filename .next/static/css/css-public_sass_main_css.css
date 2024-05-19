@@ -103,7 +103,7 @@ html .ng-star-inserted {
 }
 
 body {
-  direction: ltr;
+  direction: rtl;
   font-family: "Montserrat", sans-serif;
 }
 
@@ -184,6 +184,7 @@ a {
 
 .page {
   height: 100%;
+  background: #fbe5f2;
 }
 .page .top {
   background: #d9027d;
@@ -195,17 +196,12 @@ a {
 }
 .page .top img {
   width: 200px;
-}
-.page .top h2 {
-  font-size: 30px;
-  color: white;
-  font-weight: 500;
+  margin: auto;
 }
 .page .board {
   max-width: 800px;
   margin: 50px auto;
   border-radius: 8px;
-  background: white;
   padding: 20px;
 }
 .page .board ul {
@@ -221,27 +217,29 @@ a {
 .page .board ul li a {
   color: black;
   font-weight: 700;
-  font-size: 18px;
-  padding: 15px 50px;
+  font-size: 15px;
+  padding: 15px 30px;
   display: block;
   transition: all 0.3s ease;
   border-radius: 12px 12px 0 0;
-  background: rgba(217, 2, 125, 0.0588235294);
+  background: white;
 }
 .page .board ul li a:hover {
-  color: #d9027d;
-  background: rgba(217, 2, 125, 0.1803921569);
+  background: #d9027d;
+  color: white;
 }
 .page .board ul li a.active {
-  color: #d9027d;
-  background: rgba(217, 2, 125, 0.1803921569);
   margin-top: -10px;
+  font-size: 17px;
+  background: #d9027d;
+  padding: 15px 50px;
+  color: white;
 }
 .page .box {
   display: none;
-  padding: 50px 0;
-  background: #f8d1e8;
-  border-radius: 0 12px 12px 12px;
+  padding: 35px 0;
+  background: white;
+  border-radius: 12px 0px 12px 12px;
   position: relative;
 }
 .page .box.active {
@@ -251,66 +249,75 @@ a {
   display: flex;
   align-items: center;
   max-width: 500px;
-  margin: 0 auto 20px;
+  margin: auto;
 }
 .page .box .search_input input {
-  background-color: #ffffff;
-  border: 1px solid rgba(217, 2, 125, 0.2784313725);
-  border-radius: 8px 0 0 8px;
+  background-color: #fae0ef;
+  border-left: 0;
+  border-radius: 0 8px 8px 0;
   padding: 10px 15px;
   font-style: normal;
   font-weight: 600;
   font-size: 16px;
-  line-height: 22px;
+  line-height: 18px;
   color: #000000;
   width: 100%;
   transition: all 0.3s ease;
 }
-.page .box .search_input input:focus {
-  border: 1px solid #d9027d;
+.page .box .search_input input::placeholder {
+  font-size: 12px;
 }
 .page .box .search_input .btn_search {
-  width: 200px;
+  width: 150px;
   margin: 0 auto;
-  padding: 13px 20px;
+  padding: 12px 20px;
   text-align: center;
   color: white;
-  font-size: 18px;
+  font-size: 15px;
   font-weight: 700;
   background: #d9027d;
-  border-radius: 0 8px 8px 0;
+  border-radius: 8px 0 0 8px;
   transition: all 0.3s ease;
 }
 .page .box .search_input .btn_search:hover {
   background: #d3027a;
 }
-.page .box table {
+.page .box .sec_table {
+  padding: 20px 35px 0;
+}
+.page .box .sec_table table {
   width: 100%;
   border-collapse: collapse;
+  border: 1px solid;
+  border-radius: 6px;
 }
-.page .box th, .page .box td {
-  padding: 8px;
+.page .box .sec_table th, .page .box .sec_table td {
+  padding: 12px 8px;
+  font-weight: 600;
   text-align: left;
   border-top: 1px solid #ddd;
+  border: 1px solid;
 }
-.page .box tr:first-child td {
+.page .box .sec_table tr:first-child td {
   border-top: 0;
 }
-.page .box th {
+.page .box .sec_table th {
   background-color: #f2f2f2;
+  font-weight: 700;
 }
 .page .box .list .sec_empty p {
   text-align: center;
   padding: 30px 0;
   font-size: 18px;
+  font-weight: 680;
 }
 .page .box .list .sec_empty .btn_show.empty {
   display: block;
   text-align: center;
-  font-size: 17px;
-  font-weight: 900;
+  font-size: 16px;
+  font-weight: 700;
   color: white;
-  background: black;
+  background: #d9027d;
   border: 1px solid;
   border-radius: 12px;
   padding: 15px;
@@ -318,7 +325,7 @@ a {
   margin: 0 auto;
 }
 .page .box form {
-  padding: 0 20px 20px;
+  padding: 0 20px;
 }
 .page .box form .all_input {
   display: flex;
@@ -375,16 +382,21 @@ a {
   padding-top: 20px;
 }
 .page .box form .btn {
-  width: 200px;
-  margin: 15px auto;
+  width: 250px;
+  margin: 25px auto 0;
   padding: 14px 20px;
   text-align: center;
   color: white;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 700;
-  background: black;
+  background: #d9027d;
   border-radius: 10px;
   transition: all 0.3s ease;
+}
+.page .box .list_error .sec_error p {
+  padding: 10px 0;
+  max-width: 500px;
+  margin: 0 auto;
 }
 .page .box .sec_error {
   padding-bottom: 15px;
@@ -394,12 +406,10 @@ a {
   line-height: 20px;
   font-weight: 700;
   width: 100%;
-  background: #fddfdf;
-  color: #5f3f3f;
+  background: white;
+  color: red;
   border-radius: 8px;
-  padding: 10px 15px;
-  max-width: 500px;
-  margin: 0 auto;
+  padding: 10px 35px;
 }
 .page .box .sec_successfully {
   padding-bottom: 15px;

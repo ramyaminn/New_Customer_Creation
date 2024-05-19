@@ -23,7 +23,7 @@ export default function Page() {
     <main className="page">
       <div className="top">
         <Image src={logo} alt="" width={400} height={93} />
-        <h2>Customer Creation</h2>
+        {/* <h2>Customer Creation</h2> */}
       </div>
       <div className="board">
         <nav>
@@ -34,7 +34,7 @@ export default function Page() {
                 href="#1"
                 onClick={() => handleButtonClick('1', setActiveSection)}
               >
-                Search
+                بحث
               </a>
             </li>
             <li>
@@ -45,7 +45,7 @@ export default function Page() {
                 href="#2"
                 onClick={() => handleButtonClick('2', setActiveSection)}
               >
-                Create Customer
+                إنشاء حساب
               </a>
             </li>
           </ul>
@@ -58,11 +58,11 @@ export default function Page() {
             <input
               type="number"
               id="searchInput"
-              placeholder="Search by number..."
+              placeholder="البحث بالرقم..."
               onChange={(e) => handleInputChange(e, setSearchValue)}
             />
             <button className="btn_search" onClick={() => handleSearch(searchValue, setSearchResult, setSectionError, setShowError)}>
-              Search
+               بحث 
             </button>
           </div>
           <div className="list" id="result" dangerouslySetInnerHTML={{ __html: searchResult }}>
@@ -76,7 +76,7 @@ export default function Page() {
           <form action="">
             <div className="all_input">
               <div className="s_row">
-                <label htmlFor="">First Name</label>
+                <label htmlFor="">الأسم الأول</label>
                 <input
                   type="text"
                   value={formData.firstname}
@@ -84,7 +84,7 @@ export default function Page() {
                 />
               </div>
               <div className="s_row">
-                <label htmlFor="">Last Name</label>
+                <label htmlFor="">اسم العائله</label>
                 <input
                   type="text"
                   value={formData.lastname}
@@ -92,7 +92,7 @@ export default function Page() {
                 />
               </div>
               <div className="s_row">
-                <label htmlFor="">Email</label>
+                <label htmlFor="">البريد الألكتروني</label>
                 <input
                   type="email"
                   value={formData.emailaddress}
@@ -100,7 +100,7 @@ export default function Page() {
                 />
               </div>
               <div className="s_row">
-                <label htmlFor="">Phone Number</label>
+                <label htmlFor="">الموبيل</label>
                 <input
                   type="number"
                   value={formData.phonenumber}
@@ -108,7 +108,7 @@ export default function Page() {
                 />
               </div>
             </div>
-            <button className="btn" onClick={(e) => handleFormSubmit(e, formData, setFormData, setFormErrorMessage)}>New Account</button>
+            <button className="btn" onClick={(e) => handleFormSubmit(e, formData, setFormData, setFormErrorMessage)}>إنشاء حساب</button>
           </form>
         </div>
       </div>
