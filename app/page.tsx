@@ -1,8 +1,9 @@
 "use client";
-import React, { useState } from 'react';
-import Image from 'next/image';
+import React, { useState, useEffect } from 'react';
 import '../public/sass/main.css';
 import { handleFormSubmit } from '../general/apiHandlers';
+// import EditModal from '../general/EditModal';
+import { API_ENDPOINT_customers } from '../general/api';
 
 export default function Page() {
   const [formData, setFormData] = useState({
@@ -10,18 +11,111 @@ export default function Page() {
     lastname: '',
     emailaddress: '',
     phonenumber: '',
+    internationalnumber: '',
+    countrycode: "+20",
   });
+
   const [formErrorMessage, setFormErrorMessage] = useState<string>('');
   const [searchResult, setSearchResult] = useState<string>('');
+  const [loading, setLoading] = useState(false);
+  const [internationalnumber, setInternationalnumber] = useState(false);
+  
+  const [editData, setEditData] = useState({ firstname: '', lastname: '', phonenumber: '', emailaddress: '', accountnumber: ''});
+
+  
+  const [showModal, setShowModal] = useState(false);  
+  const togglePhoneNumber = () => {
+    setInternationalnumber(!internationalnumber);
+    if (!internationalnumber) {
+      setFormData({ ...formData, internationalnumber: "" });
+    }
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false); // This will close the modal
+};
 
   const onSubmit = (e: React.FormEvent) => {
-    handleFormSubmit(e, formData, setFormData, setFormErrorMessage, setSearchResult);
+    handleFormSubmit(e, formData, setFormData, setFormErrorMessage, setSearchResult, setLoading);
   };
+
+  const handleOpenModal = () => {
+    if (searchResult) {
+      try {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(searchResult, "text/html");
+  
+        const accountnumber = doc.querySelector("td:nth-child(1)")?.textContent?.split(' ')[0] || '';
+        const firstname = doc.querySelector("td:nth-child(2)")?.textContent?.split(' ')[0] || '';
+        const lastname = doc.querySelector("td:nth-child(2)")?.textContent?.split(' ')[1] || '';
+        const phonenumber = doc.querySelector("td:nth-child(3)")?.textContent || '';
+        const emailaddress = doc.querySelector("td:nth-child(4)")?.textContent || ''; // Assuming email is in the fourth column
+
+        setEditData({ firstname, lastname, phonenumber, emailaddress, accountnumber });
+
+        setShowModal(true);
+      } catch (error) {
+        console.error("Error parsing searchResult:", error);
+        setFormErrorMessage("Failed to load data. Please ensure the search result format is correct.");
+      }
+    } else {
+      setFormErrorMessage("No search result found to edit.");
+    }
+  };
+  
+  const handleSave = async () => {
+    try {
+      if (!editData.firstname || !editData.lastname || !editData.phonenumber || !editData.accountnumber) {
+        setFormErrorMessage("Please fill out all fields (first name, last name, phone).");
+        return;
+      }
+  
+      // Prepare the data to be sent
+      const updateData = {
+        accountnumber: editData.accountnumber, // dynamic accountnumber
+        firstname: editData.firstname,
+        lastname: editData.lastname,
+        phonenumber: editData.phonenumber,
+        emailaddress: '', // Send empty email
+      };
+  
+      const response = await fetch(`${API_ENDPOINT_customers}/update`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updateData),
+      });
+  
+      if (response.status === 204) {
+        // Handle 204 No Content - success but no content returned
+        console.log('Data updated successfully, no content returned');
+        setShowModal(false);
+        setFormErrorMessage('<div class="sec_successfully"><p>تم تحديث البيانات بنجاح</p></div>');
+      } else if (response.status === 200) {
+        // Handle if the server responds with actual data
+        const data = await response.json();
+        console.log('Data updated successfully:', data);
+        setShowModal(false);
+        setFormErrorMessage('<div class="sec_successfully"><p>تم تحديث البيانات بنجاح</p></div>');
+      } else {
+        setFormErrorMessage('<div class="sec_error"><p>خطأ في تحديث البيانات!</p></div>');
+      }setShowModal(false);
+    } catch (error) {
+      console.error("Error updating data:", error);
+      setFormErrorMessage('<div class="sec_error"><p>حدث خطأ أثناء تحديث البيانات. يرجى المحاولة مرة أخرى لاحقًا.</p></div>');
+    }
+  };
+  
+
+  const countryCodes = [
+    { code: "+1", label: "USA", image: "/img/flags/usa.png" },
+    { code: "+44", label: "UK", image: "/img/flags/uk.png" },
+    { code: "+971", label: "UAE", image: "/img/flags/uae.png" },
+  ];
 
   return (
     <main className="page">
-      <div className="top">
-      <div className="img">
+     <div className="top">
+        <div className="img">
           <svg viewBox="0 0 500 93" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
               <path stroke-width="2" d="M0 0 C14 0 14 0 17.1328125 2.24609375 C17.79023438 3.29925781 18.44765625 4.35242188 19.125 5.4375 C19.51002686 6.01733643 19.89505371 6.59717285 20.29174805 7.19458008 C21.12407305 8.45026705 21.93735133 9.71874987 22.73291016 10.99804688 C24.48630466 13.76834262 26.39461931 16.41629763 28.30419922 19.08032227 C29.83887562 21.22434816 31.35271935 23.3818992 32.86328125 25.54296875 C36.49783062 30.72525034 40.20906589 35.85108784 43.93286133 40.96948242 C49.7045402 48.92359232 55.33049511 56.96820141 61 65 C61.33 43.55 61.66 22.1 62 0 C64.97 0 67.94 0 71 0 C71 28.71 71 57.42 71 87 C63 87 63 87 60.92578125 85.4453125 C60.39339844 84.67960937 59.86101562 83.91390625 59.3125 83.125 C58.32056641 81.75021484 58.32056641 81.75021484 57.30859375 80.34765625 C56.94620605 79.82059082 56.58381836 79.29352539 56.21044922 78.75048828 C54.86870032 76.81012128 53.48699359 74.90266577 52.09765625 72.99609375 C49.8829697 69.95346463 47.68107108 66.90219716 45.48828125 63.84375 C40.33028426 56.6633781 35.06437758 49.56261887 29.81005859 42.45263672 C27.918047 39.88895336 26.030738 37.32186303 24.14453125 34.75390625 C23.51345459 33.89531006 22.88237793 33.03671387 22.23217773 32.15209961 C21.02651766 30.51153336 19.82156082 28.87044998 18.61743164 27.22875977 C18.07078857 26.48553467 17.52414551 25.74230957 16.9609375 24.9765625 C16.48446777 24.32768066 16.00799805 23.67879883 15.51708984 23.01025391 C13.72582078 20.63669267 11.85760799 18.32200998 10 16 C9.67 39.43 9.34 62.86 9 87 C6.03 87 3.06 87 0 87 C0 58.29 0 29.58 0 0 Z " fill="#EFEFEF" transform="translate(333,2)"/>
               <path stroke-width="2" d="M0 0 C40.56708861 0 40.56708861 0 50 9 C54.6791949 14.04860502 56.57284433 18.67602244 56.3671875 25.53125 C55.53214232 31.14559629 53.16125452 35.90049561 49.0859375 39.859375 C43.29936304 44.10987697 36.967818 45.65595389 30 47 C30.58116577 47.61875 30.58116577 47.61875 31.17407227 48.25 C43.89783448 61.80789022 43.89783448 61.80789022 49.359375 68.1796875 C51.34198193 70.3794371 53.44422677 72.43082582 55.5625 74.5 C59.50216019 78.37894625 62.84832373 82.46405807 66 87 C60.65446674 87.78472697 55.28316557 88.44453667 50 87 C45.90363341 83.80483406 43.21560035 80.10563045 40.30322266 75.84326172 C38.18932557 72.8533923 35.77745042 70.13398606 33.375 67.375 C30.68838414 64.23618148 28.04102702 61.08220301 25.51953125 57.80859375 C24.74996094 56.81988281 23.98039062 55.83117188 23.1875 54.8125 C22.52105469 53.93207031 21.85460937 53.05164062 21.16796875 52.14453125 C18.73276351 49.41942556 18.73276351 49.41942556 13 48 C13 60.87 13 73.74 13 87 C8.71 87 4.42 87 0 87 C0 58.29 0 29.58 0 0 Z M13 7 C13 18.22 13 29.44 13 41 C26.94462109 41.79740734 26.94462109 41.79740734 37.55078125 35.46875 C41.41679554 31.02555612 42.35502025 28.17563473 42.28125 22.44921875 C41.66712272 17.10119372 39.28646623 13.22371178 35.4375 9.5625 C28.02080658 4.80820934 23.70422383 7 13 7 Z " fill="#EBEBEB" transform="translate(241,2)"/>
@@ -29,10 +123,17 @@ export default function Page() {
               <path stroke-width="2" d="M0 0 C3.46679688 0.04882812 3.46679688 0.04882812 6.93359375 0.09765625 C12.03785435 9.6871002 16.13040983 19.73317115 20.37109375 29.72265625 C21.96935892 33.47741481 23.57002756 37.23114342 25.171875 40.984375 C25.57134338 41.92074295 25.97081177 42.8571109 26.38238525 43.82185364 C28.96040535 49.85343239 31.57553645 55.86735839 34.2265625 61.8671875 C34.55609421 62.61397766 34.88562592 63.36076782 35.22514343 64.13018799 C36.76578765 67.6188943 38.31290463 71.10453889 39.86889648 74.58642578 C40.41408832 75.81795039 40.95910274 77.04955356 41.50390625 78.28125 C41.97586426 79.33884521 42.44782227 80.39644043 42.93408203 81.48608398 C43.93359375 84.09765625 43.93359375 84.09765625 43.93359375 87.09765625 C39.31359375 87.09765625 34.69359375 87.09765625 29.93359375 87.09765625 C28.21965456 83.02450016 26.50904252 78.95026185 24.80664062 74.87231445 C24.22652096 73.48544559 23.64450122 72.09936993 23.06054688 70.71411133 C22.22155069 68.72292225 21.38942713 66.72898141 20.55859375 64.734375 C20.05585938 63.53514404 19.553125 62.33591309 19.03515625 61.1003418 C17.93359375 58.09765625 17.93359375 58.09765625 17.93359375 55.09765625 C6.38359375 55.09765625 -5.16640625 55.09765625 -17.06640625 55.09765625 C-18.05640625 58.06765625 -19.04640625 61.03765625 -20.06640625 64.09765625 C-20.84684122 65.99768574 -21.65774497 67.8857736 -22.51171875 69.75390625 C-22.94871094 70.71296875 -23.38570312 71.67203125 -23.8359375 72.66015625 C-24.50689453 74.11421875 -24.50689453 74.11421875 -25.19140625 75.59765625 C-25.64644531 76.59796875 -26.10148438 77.59828125 -26.5703125 78.62890625 C-29.92566377 85.95691377 -29.92566377 85.95691377 -31.06640625 87.09765625 C-34.7329582 87.2406575 -38.39784844 87.13982358 -42.06640625 87.09765625 C-36.99102101 75.58733099 -31.80661594 64.13378567 -26.51046753 52.72344971 C-19.84940393 38.37015917 -13.26814747 23.98560837 -6.86254883 9.51635742 C-6.37165771 8.41138916 -5.8807666 7.3064209 -5.375 6.16796875 C-4.95017334 5.20648926 -4.52534668 4.24500977 -4.08764648 3.25439453 C-2.60494608 0.12310709 -2.60494608 0.12310709 0 0 Z M-0.06640625 17.09765625 C-3.64538133 24.65797639 -7.18320513 32.23217595 -10.50390625 39.91015625 C-10.99761719 41.05097656 -11.49132812 42.19179688 -12 43.3671875 C-13.18767169 45.91959448 -13.18767169 45.91959448 -13.06640625 48.09765625 C-4.15640625 48.09765625 4.75359375 48.09765625 13.93359375 48.09765625 C11.45080043 40.59183588 11.45080043 40.59183588 8.453125 33.40625 C8.01162109 32.44267578 7.57011719 31.47910156 7.11523438 30.48632812 C6.43750977 29.02549805 6.43750977 29.02549805 5.74609375 27.53515625 C5.28267578 26.52646484 4.81925781 25.51777344 4.34179688 24.47851562 C3.20987037 22.01628375 2.07374125 19.55608931 0.93359375 17.09765625 C0.60359375 17.09765625 0.27359375 17.09765625 -0.06640625 17.09765625 Z " fill="#EFEFEF" transform="translate(189.06640625,1.90234375)"/>
               <path stroke-width="2" d="M0 0 C0.87011719 0.00902344 1.74023438 0.01804688 2.63671875 0.02734375 C4.7579342 0.05065381 6.87900562 0.08651421 9 0.125 C9 2.435 9 4.745 9 7.125 C7.67548828 7.16367188 7.67548828 7.16367188 6.32421875 7.203125 C-6.82043134 7.82435443 -17.05529326 10.79447622 -26.25 20.5 C-33.06120983 30.71681474 -34.69979988 41.07471415 -32.421875 53.203125 C-29.83305488 61.44027993 -24.62756763 68.17772047 -17.33203125 72.82421875 C-11.03438229 76.07071725 -5.82187891 77.22913748 1.25 77.6875 C3.14492187 77.81318359 3.14492187 77.81318359 5.078125 77.94140625 C6.04234375 78.00199219 7.0065625 78.06257813 8 78.125 C7.01 81.095 6.02 84.065 5 87.125 C-9.51065546 87.84752226 -21.61632194 85.94266944 -33 76.125 C-42.47011673 67.21085881 -46.85262672 56.21527221 -47.375 43.375 C-47.10923898 31.08746108 -42.46792605 20.996331 -34.12109375 12.12890625 C-24.3745389 2.9730517 -13.09108551 -0.26141953 0 0 Z " fill="#ECECEC" transform="translate(135,1.875)"/>
               <path stroke-width="2" d="M0 0 C9.95215558 7.33863299 16.25622456 17.40457608 18.24609375 29.65625 C19.4492198 41.55382979 17.03111217 52.80487834 9.97265625 62.578125 C6.97392095 66.18746251 3.67715661 69.46031073 0.24609375 72.65625 C-2.72390625 71.66625 -5.69390625 70.67625 -8.75390625 69.65625 C-7.84640625 68.439375 -6.93890625 67.2225 -6.00390625 65.96875 C-5.45476562 65.23011719 -4.905625 64.49148437 -4.33984375 63.73046875 C-2.75390625 61.65625 -2.75390625 61.65625 -0.62890625 59.28125 C5.68600404 50.44037559 6.26214425 41.15900361 5.24609375 30.65625 C3.55841022 22.3631296 -1.49605109 16.16982192 -7.75390625 10.65625 C-15.16651022 5.76416052 -23.82582418 2.77807799 -32.75390625 3.65625 C-43.87030036 6.06408115 -50.89158976 10.67135842 -58.75390625 18.65625 C-61.91506401 17.28641497 -62.74661545 16.6671862 -64.75390625 13.65625 C-47.02624952 -4.86915128 -24.24740652 -15.82870698 0 0 Z " fill="#EDEDED" transform="translate(70.75390625,41.34375)"/>
-              <path  stroke-width="2" d="M0 0 C3.96 0 7.92 0 12 0 C12 28.71 12 57.42 12 87 C8.04 87 4.08 87 0 87 C0 58.29 0 29.58 0 0 Z " fill="#FDFDFD" transform="translate(314,2)"/>
+              <path stroke-width="2" d="M0 0 C3.96 0 7.92 0 12 0 C12 28.71 12 57.42 12 87 C8.04 87 4.08 87 0 87 C0 58.29 0 29.58 0 0 Z " fill="#FDFDFD" transform="translate(314,2)"/>
           </svg>
         </div>
       </div>
+      {loading && (
+        <div className="sec_loader">
+          <div className="loader">
+              {/* Your loader HTML/CSS goes here */}
+          </div>
+        </div>
+        )}
       <div className="board">
         <h1>إنشاء حساب</h1>
         
@@ -40,7 +141,8 @@ export default function Page() {
           {formErrorMessage && (
             <div dangerouslySetInnerHTML={{ __html: formErrorMessage }} />
           )}
-          <form action="" onSubmit={onSubmit}>
+
+          <form onSubmit={onSubmit}>
             <div className="all_input">
               <div className="s_row">
                 <label htmlFor="">الأسم الأول</label>
@@ -67,22 +169,91 @@ export default function Page() {
                 />
               </div>
               <div className="s_row">
-                <label htmlFor="">الموبيل</label>
-                <input
-                  type="number"
-                  value={formData.phonenumber}
-                  onChange={(e) => setFormData({ ...formData, phonenumber: e.target.value })}
-                />
+                 <label htmlFor="">الموبيل</label>
+                 {!internationalnumber ? (
+                   <input
+                     type="number"
+                     value={formData.phonenumber}
+                     onChange={(e) => setFormData({ ...formData, phonenumber: e.target.value })}
+                   />
+                 ) : (
+                   <div className='parent_slelct'>
+                     <div className="sec_select">
+                       <select
+                         value={formData.countrycode}
+                         onChange={(e) => setFormData({ ...formData, countrycode: e.target.value })}
+                       >
+                         {countryCodes.map((country) => (
+                           <option key={country.code} value={country.code}>
+                             ({country.code}) ({country.label})
+                           </option>
+                         ))}
+                       </select>
+                       <span className='arrow'></span>
+                     </div>
+                     <input
+                       type="number"
+                       value={formData.internationalnumber}
+                       onChange={(e) => setFormData({ ...formData, internationalnumber: e.target.value })}
+                     />
+                   </div>
+                 )}
+                 <div className={`section_change ${internationalnumber ? "active" : ""}`}>
+                   <label>
+                     <div className={`change_option ${internationalnumber ? "active" : ""}`}>
+                       <span className='dots'></span>
+                     </div>
+                     <input type="checkbox" checked={internationalnumber} onChange={togglePhoneNumber} />
+                     رقم خارج مصر 
+                   </label>
+                 </div>
               </div>
             </div>
-            <button className="btn">إنشاء حساب</button>
+            <button className="btn" type="submit">
+              إنشاء حساب
+            </button>
           </form>
+
           {searchResult && (
-            <div className="list_error" id="result"  dangerouslySetInnerHTML={{ __html: searchResult }}></div>
+            <div className="list_error" id="result">
+              <div dangerouslySetInnerHTML={{ __html: searchResult }} />
+                <button className='btn_open' onClick={handleOpenModal}>تعديل الأسم</button>
+              </div>
           )}
         </div>
+
+        {showModal && (
+          <div className="modal">
+            <div className="modal-content">
+                <button onClick={handleCloseModal} className="close_button">
+                <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 30 30" width="20px" height="20px">    <path d="M 7 4 C 6.744125 4 6.4879687 4.0974687 6.2929688 4.2929688 L 4.2929688 6.2929688 C 3.9019687 6.6839688 3.9019687 7.3170313 4.2929688 7.7070312 L 11.585938 15 L 4.2929688 22.292969 C 3.9019687 22.683969 3.9019687 23.317031 4.2929688 23.707031 L 6.2929688 25.707031 C 6.6839688 26.098031 7.3170313 26.098031 7.7070312 25.707031 L 15 18.414062 L 22.292969 25.707031 C 22.682969 26.098031 23.317031 26.098031 23.707031 25.707031 L 25.707031 23.707031 C 26.098031 23.316031 26.098031 22.682969 25.707031 22.292969 L 18.414062 15 L 25.707031 7.7070312 C 26.098031 7.3170312 26.098031 6.6829688 25.707031 6.2929688 L 23.707031 4.2929688 C 23.316031 3.9019687 22.682969 3.9019687 22.292969 4.2929688 L 15 11.585938 L 7.7070312 4.2929688 C 7.5115312 4.0974687 7.255875 4 7 4 z"/></svg>
+                </button>
+                <h2>تعديل الأسم</h2>
+              <form>
+                <label>
+                الأسم الأول
+                  <input 
+                    type="text" 
+                    value={editData.firstname} 
+                    onChange={(e) => setEditData({ ...editData, firstname: e.target.value })}
+                  />
+                </label>
+                <label>
+                اسم العائله
+                  <input 
+                    type="text" 
+                    value={editData.lastname} 
+                    onChange={(e) => setEditData({ ...editData, lastname: e.target.value })}
+                  />
+                </label>
+                <button className='btn_save' type="button" onClick={handleSave}>حفظ</button>
+              </form>
+            </div>
+          </div>
+        )}
+
+
       </div>
     </main>
   );
 }
-
