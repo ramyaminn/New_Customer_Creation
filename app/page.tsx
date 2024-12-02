@@ -4,6 +4,7 @@ import '../public/sass/main.css';
 import { handleFormSubmit } from '../general/apiHandlers';
 // import EditModal from '../general/EditModal';
 import { API_ENDPOINT_customers } from '../general/api';
+import CustomDropdown from './dropdown';
 
 export default function Page() {
   const [formData, setFormData] = useState({
@@ -20,7 +21,7 @@ export default function Page() {
   const [loading, setLoading] = useState(false);
   const [internationalnumber, setInternationalnumber] = useState(false);
   
-  const [editData, setEditData] = useState({ firstname: '', lastname: '', phonenumber: '', emailaddress: '', accountnumber: ''});
+  const [editData, setEditData] = useState({id: '', firstname: '', lastname: '', phonenumber: '', emailaddress: '', accountnumber: ''});
 
   
   const [showModal, setShowModal] = useState(false);  
@@ -31,27 +32,29 @@ export default function Page() {
     }
   };
 
-  const handleCloseModal = () => {
-    setShowModal(false); // This will close the modal
-};
+
 
   const onSubmit = (e: React.FormEvent) => {
     handleFormSubmit(e, formData, setFormData, setFormErrorMessage, setSearchResult, setLoading);
   };
 
+  //pop Edit
   const handleOpenModal = () => {
     if (searchResult) {
       try {
         const parser = new DOMParser();
         const doc = parser.parseFromString(searchResult, "text/html");
-  
+        
+        // const id = doc.querySelector("td:nth-child(0)")?.textContent || ''; // Assuming Id is in the first column
+        const id = doc.querySelector("td:nth-child(4)")?.textContent || ''; // Assuming the ID is in the first column
+
         const accountnumber = doc.querySelector("td:nth-child(1)")?.textContent?.split(' ')[0] || '';
         const firstname = doc.querySelector("td:nth-child(2)")?.textContent?.split(' ')[0] || '';
         const lastname = doc.querySelector("td:nth-child(2)")?.textContent?.split(' ')[1] || '';
         const phonenumber = doc.querySelector("td:nth-child(3)")?.textContent || '';
         const emailaddress = doc.querySelector("td:nth-child(4)")?.textContent || ''; // Assuming email is in the fourth column
 
-        setEditData({ firstname, lastname, phonenumber, emailaddress, accountnumber });
+        setEditData({ id, firstname, lastname, phonenumber, emailaddress, accountnumber });
 
         setShowModal(true);
       } catch (error) {
@@ -62,16 +65,21 @@ export default function Page() {
       setFormErrorMessage("No search result found to edit.");
     }
   };
+
+  const handleCloseModal = () => {
+    setShowModal(false); // This will close the modal
+  };
   
   const handleSave = async () => {
     try {
-      if (!editData.firstname || !editData.lastname || !editData.phonenumber || !editData.accountnumber) {
+      if (!editData.id || !editData.firstname || !editData  .lastname || !editData.phonenumber || !editData.accountnumber) {
         setFormErrorMessage("Please fill out all fields (first name, last name, phone).");
         return;
       }
   
       // Prepare the data to be sent
       const updateData = {
+        id: editData.id, // Include Id in the request
         accountnumber: editData.accountnumber, // dynamic accountnumber
         firstname: editData.firstname,
         lastname: editData.lastname,
@@ -107,9 +115,23 @@ export default function Page() {
   
 
   const countryCodes = [
-    { code: "+1", label: "USA", image: "/img/flags/usa.png" },
-    { code: "+44", label: "UK", image: "/img/flags/uk.png" },
-    { code: "+971", label: "UAE", image: "/img/flags/uae.png" },
+    { code: "+966", label: "السعودية", image: "/img/flags/saudi-arabia.png" },
+    { code: "+974", label: "قطر", image: "/img/flags/qatar.png" },
+    { code: "+971", label: "الامارات", image: "/img/flags/uae.png" },
+    { code: "+963", label: "سوريا", image: "/img/flags/syria.png"},
+    { code: "+964", label: "العراق", image: "/img/flags/iraq.png" },
+    { code: "+968", label: "الأردن", image: "/img/flags/jordan.png" },
+    { code: "+965", label: "الكويت", image: "/img/flags/kuwait.png" },
+    { code: "+973", label: "البحرين", image: "/img/flags/bahrain.png" },
+    { code: "+961", label: "لبنان", image: "/img/flags/lebanon.png" },
+    { code: "+218", label: "ليبيا", image: "/img/flags/libya.png" },
+    { code: "+968", label: "عمان", image: "/img/flags/oman.png" },
+    { code: "+212", label: "المغرب", image: "/img/flags/morocco.png" },
+    { code: "+967", label: "اليمن", image: "/img/flags/yemen.png" },
+    { code: "+216", label: "تونس", image: "/img/flags/tunisia.png" },
+    { code: "+249", label: "السودان", image: "/img/flags/sudan.png" },
+    { code: "+970", label: "فلسطين", image: "/img/flags/palestine.png" },
+    { code: "+213", label: "الجزائر", image: "/img/flags/algeria.png" },
   ];
 
   return (
@@ -133,7 +155,7 @@ export default function Page() {
               {/* Your loader HTML/CSS goes here */}
           </div>
         </div>
-        )}
+      )}
       <div className="board">
         <h1>إنشاء حساب</h1>
         
@@ -177,26 +199,44 @@ export default function Page() {
                      onChange={(e) => setFormData({ ...formData, phonenumber: e.target.value })}
                    />
                  ) : (
-                   <div className='parent_slelct'>
-                     <div className="sec_select">
-                       <select
-                         value={formData.countrycode}
-                         onChange={(e) => setFormData({ ...formData, countrycode: e.target.value })}
-                       >
-                         {countryCodes.map((country) => (
-                           <option key={country.code} value={country.code}>
-                             ({country.code}) ({country.label})
-                           </option>
-                         ))}
-                       </select>
-                       <span className='arrow'></span>
-                     </div>
-                     <input
-                       type="number"
-                       value={formData.internationalnumber}
-                       onChange={(e) => setFormData({ ...formData, internationalnumber: e.target.value })}
-                     />
-                   </div>
+                  //  <div className='parent_slelct'>
+                  //    <div className="sec_select">
+                  //       <select
+                  //         value={formData.countrycode}
+                  //         onChange={(e) => setFormData({ ...formData, countrycode: e.target.value })}
+                  //       >
+                  //         {countryCodes.map((country) => (
+                  //           <option key={country.code} value={country.code}>
+                  //             ({country.code}) ({country.label})
+                  //             <img src={country.image} alt="" />
+                  //           </option>
+                  //         ))}
+                  //       </select>
+                  //       <span className='arrow'></span>
+                  //    </div>
+                  //    <input
+                  //      type="number"
+                  //      value={formData.internationalnumber}
+                  //      onChange={(e) => setFormData({ ...formData, internationalnumber: e.target.value })}
+                  //    />
+                  //  </div>
+                  <div className="parent_select">
+                    <div className="sec_select">
+                      <CustomDropdown
+                        options={countryCodes}
+                        value={formData.countrycode}
+                        onChange={(code: any) => setFormData({ ...formData, countrycode: code })}
+                      />
+                    </div>
+                    <input
+                      type="number"
+                      value={formData.internationalnumber}
+                      onChange={(e) =>
+                        setFormData({ ...formData, internationalnumber: e.target.value })
+                      }
+                    />
+                  </div>
+
                  )}
                  <div className={`section_change ${internationalnumber ? "active" : ""}`}>
                    <label>
@@ -239,7 +279,7 @@ export default function Page() {
                   />
                 </label>
                 <label>
-                اسم العائله
+                  اسم العائله
                   <input 
                     type="text" 
                     value={editData.lastname} 
