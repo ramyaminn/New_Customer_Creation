@@ -63,6 +63,6 @@ pnpm-debug.log*
 .next-tmp
 
 # optional: lock files (uncomment if you want to ignore them)
-/package-lock.json
+# /package-lock.json
 # /yarn.lock
 # /pnpm-lock.yaml
