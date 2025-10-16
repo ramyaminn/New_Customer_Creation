@@ -1,6 +1,6 @@
 // wrangler.jsonc
 {
-  "name": "new-customer-creation",
+  "name": "customer-creation",
   "compatibility_date": "2025-10-16",
   "assets": {
     "directory": "./out"
