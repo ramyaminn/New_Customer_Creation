@@ -1,0 +1,597 @@
+html, body, iframe, header, footer, main, aside, nav, section, article, div, p, h1, h2, h3, h4, h5, h6, dl, dt, dd, ul, ol, li, hr, blockquote, pre, figure, figcaption, a, address, del, em, i, img, strong, sub, sup, table, thead, tbody, tfoot, tr, th, td, form, fieldset, legend, label, input, select, textarea, button {
+  vertical-align: baseline;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: none;
+  background: none;
+  font-size: 100%;
+  font: inherit;
+}
+
+html, body, iframe, header, footer, main, aside, nav, section, article, div, h1, h2, h3, h4, h5, h6, p, dl, dt, dd, ul, ol, li, hr, blockqoute, pre, figure, figcaption, form, fieldset, legend, label, input, select, textarea, button {
+  display: block;
+}
+
+html, body {
+  -webkit-text-size-adjust: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+dl, dt, dd, ul, ol, li {
+  list-style: none;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+button {
+  cursor: pointer;
+}
+
+button::-moz-focus-inner {
+  padding: 0;
+  border: 0;
+}
+
+u, ins, del {
+  text-decoration: none;
+}
+
+/**
+ * Correct the cursor style of increment and decrement buttons in Chrome.
+ */
+/**
+ * 1. Correct the odd appearance in Chrome and Safari.
+ * 2. Correct the outline style in Safari.
+ */
+[type=search] {
+  -webkit-appearance: textfield; /* 1 */
+  outline-offset: -2px; /* 2 */
+}
+
+/**
+ * Remove the inner padding in Chrome and Safari on macOS.
+ */
+[type=search]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+/**
+ * 1. Correct the inability to style clickable types in iOS and Safari.
+ * 2. Change font properties to `inherit` in Safari.
+ */
+::-webkit-file-upload-button {
+  -webkit-appearance: button; /* 1 */
+  font: inherit; /* 2 */
+}
+
+button:-moz-focusring,
+[type=button]:-moz-focusring,
+[type=reset]:-moz-focusring,
+[type=submit]:-moz-focusring {
+  outline: none;
+}
+
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+  height: auto;
+}
+
+input[type=number] {
+  -moz-appearance: textfield !important;
+}
+
+body,
+html {
+  color: black;
+  font: 400 16px/1 "Cairo", sans-serif;
+  font-size: 16px;
+  height: 100%;
+  position: relative;
+}
+body .ng-star-inserted,
+html .ng-star-inserted {
+  display: none !important;
+}
+
+body {
+  direction: rtl;
+  background: #fef8fc;
+}
+
+.site-main {
+  margin: 0 !important;
+}
+
+body ul,
+body ol {
+  margin: 0;
+}
+body input,
+body input[type=text],
+body input[type=button],
+body input[type=submit],
+body input[type=number],
+body input[type=email],
+body input[type=tel],
+body input[type=url],
+body input[type=password],
+body input[type=search],
+body button,
+body select,
+body h1,
+body h2,
+body h3,
+body h4,
+body h5,
+body h6 {
+  margin: 0;
+  color: black;
+}
+
+.tbl {
+  display: table;
+  width: 100%;
+  height: 100%;
+}
+
+.tcl {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.clearfix::after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+img {
+  max-width: 100%;
+}
+
+a {
+  text-decoration: unset;
+}
+
+.overlay {
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  pointer-events: none;
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.overlay_visible {
+  pointer-events: auto;
+  visibility: visible;
+  opacity: 1;
+}
+
+.page .top {
+  background: #d9027d;
+  text-align: center;
+  padding: 25px 20px 20px;
+  align-items: center;
+  justify-content: space-between;
+}
+.page .top .img svg {
+  max-width: 200px;
+  margin: auto;
+}
+.page .board {
+  max-width: 800px;
+  margin: 50px auto;
+}
+.page .board h1 {
+  font-size: 28px;
+  color: black;
+  font-weight: 800;
+  text-align: center;
+  padding-bottom: 30px;
+}
+.page .box {
+  margin: 0 20px;
+  padding: 35px 10px;
+  background: white;
+  border-radius: 12px;
+  position: relative;
+}
+.page .box .sec_table {
+  padding: 20px 35px 0;
+}
+.page .box .sec_table table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid;
+  border-radius: 6px;
+}
+.page .box .sec_table th, .page .box .sec_table td {
+  padding: 12px 8px;
+  font-weight: 600;
+  text-align: right;
+  border-top: 1px solid #ddd;
+  border: 1px solid;
+}
+.page .box .sec_table th .link_edit, .page .box .sec_table td .link_edit {
+  color: black;
+  text-decoration: underline;
+  font-size: 14px;
+  font-weight: 700;
+}
+.page .box .sec_table tr:first-child td {
+  border-top: 0;
+}
+.page .box .sec_table th {
+  font-size: 12px;
+  background-color: #f2f2f2;
+  font-weight: 700;
+}
+.page .box .list .sec_empty p {
+  text-align: center;
+  padding: 30px 0;
+  font-size: 18px;
+  font-weight: 680;
+}
+.page .box .list .sec_empty .btn_show.empty {
+  display: block;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 700;
+  color: white;
+  background: #d9027d;
+  border: 1px solid;
+  border-radius: 12px;
+  padding: 15px;
+  max-width: 250px;
+  margin: 0 auto;
+}
+.page .box form .all_input {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.page .box form .all_input .s_row {
+  padding: 15px;
+  width: 50%;
+  position: relative;
+}
+@media screen and (max-width: 767px) {
+  .page .box form .all_input .s_row {
+    width: 100%;
+  }
+}
+.page .box form .all_input .s_row label {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 19px;
+  color: #000000;
+  padding-bottom: 6px;
+}
+.page .box form .all_input .s_row input {
+  background-color: #ffffff;
+  border: 1px solid rgba(217, 2, 125, 0.2784313725);
+  border-radius: 5px;
+  padding: 10px 15px;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 22px;
+  color: #000000;
+  width: 100%;
+  transition: all 0.3s ease;
+}
+.page .box form .all_input .s_row input:focus {
+  border: 1px solid #d9027d;
+}
+.page .box form .all_input .s_row ~ .row {
+  padding-top: 20px;
+}
+.page .box form .all_input .s_row .parent_select {
+  display: flex;
+  align-items: center;
+  column-gap: 5px;
+}
+.page .box form .all_input .s_row .parent_select .sec_select {
+  border: 1px solid rgba(217, 2, 125, 0.2784313725);
+  border-radius: 5px;
+  padding: 10px 5px;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 22px;
+  color: #000000;
+  width: 200px;
+}
+.page .box form .all_input .s_row .parent_select .sec_select .custom-dropdown {
+  position: relative;
+}
+.page .box form .all_input .s_row .parent_select .sec_select .custom-dropdown .dropdown-selected {
+  display: flex;
+  align-items: center;
+  column-gap: 5px;
+  cursor: pointer;
+}
+.page .box form .all_input .s_row .parent_select .sec_select .custom-dropdown .dropdown-selected .values {
+  display: flex;
+  align-items: center;
+  column-gap: 5px;
+}
+.page .box form .all_input .s_row .parent_select .sec_select .custom-dropdown .dropdown-selected .values span {
+  display: flex;
+  align-items: center;
+  column-gap: 5px;
+}
+.page .box form .all_input .s_row .parent_select .sec_select .custom-dropdown .dropdown-selected .values .info_text {
+  font-size: 10px;
+}
+.page .box form .all_input .s_row .parent_select .sec_select .custom-dropdown .dropdown-selected .dropdown-arrow {
+  font-size: 10px;
+}
+.page .box form .all_input .s_row .parent_select .sec_select .custom-dropdown .dropdown-selected .dropdown-arrow::before {
+  content: "";
+  background-image: url(../img/down-chevron-black.png);
+  width: 12px;
+  height: 12px;
+  background-size: 12px;
+  background-repeat: no-repeat;
+  display: block;
+}
+.page .box form .all_input .s_row .parent_select .sec_select .custom-dropdown .dropdown-options {
+  border-top: 1px solid rgba(217, 2, 125, 0.2784313725);
+  padding: 10px 5px;
+  position: absolute;
+  left: -5px;
+  right: -5px;
+  top: 30px;
+  background: white;
+  z-index: 9;
+  box-shadow: 0 20px 35px rgba(0, 0, 0, 0.1);
+  max-height: 220px;
+  overflow: scroll;
+}
+.page .box form .all_input .s_row .parent_select .sec_select .custom-dropdown .dropdown-options::-webkit-scrollbar {
+  display: none;
+}
+.page .box form .all_input .s_row .parent_select .sec_select .custom-dropdown .dropdown-options .dropdown-option {
+  cursor: pointer;
+  padding-bottom: 5px;
+}
+.page .box form .all_input .s_row .parent_select .sec_select .custom-dropdown .dropdown-options .dropdown-option:last-child {
+  padding-bottom: 0;
+}
+.page .box form .all_input .s_row .parent_select .sec_select .custom-dropdown .dropdown-options .dropdown-option .single_option {
+  display: flex;
+  align-items: center;
+  column-gap: 5px;
+}
+.page .box form .all_input .s_row .section_change {
+  position: absolute;
+  right: 10px;
+  bottom: -18px;
+}
+.page .box form .all_input .s_row .section_change label {
+  display: flex;
+  align-items: center;
+  column-gap: 5px;
+  font-size: 12px;
+  font-weight: bold;
+  color: #d9027d;
+  cursor: pointer;
+}
+.page .box form .all_input .s_row .section_change label .change_option {
+  width: 35px;
+  height: 18px;
+  background: #f8cfe7;
+  border-radius: 50px;
+  position: relative;
+}
+.page .box form .all_input .s_row .section_change label .change_option.active {
+  background: #d9027d;
+}
+.page .box form .all_input .s_row .section_change label .change_option.active .dots {
+  transform: translateX(-2px);
+}
+.page .box form .all_input .s_row .section_change label .change_option .dots {
+  width: 15px;
+  height: 15px;
+  background: #ffffff;
+  border-radius: 50px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  transform: translateX(-18px);
+  margin: auto;
+  transition: all 0.4s ease;
+}
+.page .box form .all_input .s_row .section_change label input[type=checkbox] {
+  width: 20px !important;
+  display: none;
+}
+.page .box form .btn {
+  width: 250px;
+  margin: 50px auto 0;
+  padding: 14px 20px;
+  text-align: center;
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
+  background: #d9027d;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+.page .box .list_error .sec_error p {
+  padding: 10px 0;
+  max-width: 500px;
+  margin: 0 auto;
+}
+.page .box .sec_error {
+  padding-bottom: 15px;
+}
+.page .box .sec_error p {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 700;
+  width: 100%;
+  background: white;
+  color: red;
+  border-radius: 8px;
+  padding: 10px 15px;
+}
+.page .box .sec_successfully {
+  padding-bottom: 15px;
+}
+.page .box .sec_successfully p {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 700;
+  width: 100%;
+  background: #dffde5;
+  color: black;
+  border-radius: 8px;
+  padding: 10px 15px;
+  max-width: 500px;
+  margin: 0 auto;
+  text-align: center;
+}
+.page .box .btn_open {
+  font-size: 12px;
+  font-weight: 700;
+  color: #d9027d;
+  margin: 20px 35px;
+  width: -webkit-fill-available;
+  display: block;
+  text-align: end;
+}
+.page .box .btn_open:hover {
+  text-decoration: underline;
+}
+.page .modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.8392156863);
+  z-index: 999999;
+}
+.page .modal .modal-content {
+  background-color: #ffffff;
+  padding: 30px 40px;
+  border-radius: 8px;
+  width: 50%;
+  position: relative;
+}
+.page .modal .modal-content .close_button {
+  color: #d9027d;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  position: absolute;
+  right: 15px;
+  top: 15px;
+}
+.page .modal .modal-content h2 {
+  font-size: 16px;
+  font-weight: 700;
+  text-align: center;
+  padding-bottom: 20px;
+}
+.page .modal .modal-content form label {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 19px;
+  color: #000000;
+  padding-bottom: 6px;
+}
+.page .modal .modal-content form label input {
+  background-color: #ffffff;
+  border: 1px solid rgba(217, 2, 125, 0.2784313725);
+  border-radius: 5px;
+  padding: 10px 15px;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 22px;
+  color: #000000;
+  width: 100%;
+  transition: all 0.3s ease;
+  margin-top: 4px;
+}
+.page .modal .modal-content form label input:focus {
+  border: 1px solid #d9027d;
+}
+.page .modal .modal-content form .btn_save {
+  width: 100%;
+  margin: 20px auto 0;
+  max-width: 180px;
+  height: 45px;
+  background: #d9027d;
+  border: none;
+  outline: none;
+  border-radius: 40px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  color: white;
+  font-weight: 700;
+}
+.page .modal .modal-content form .btn_save:hover {
+  background: #cb0375;
+}
+.page .sec_loader {
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  pointer-events: auto;
+  visibility: visible;
+  opacity: 1;
+  transition: all 0.3s ease;
+}
+.page .sec_loader .loader {
+  border: 6px solid #f3f3f3;
+  border-top: 6px solid #d9027d;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 2s linear infinite;
+  margin: auto;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/*# sourceMappingURL=main.css.map */
