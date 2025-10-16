@@ -1,7 +1,8 @@
+// wrangler.jsonc
 {
   "name": "new-customer-creation",
-  "compatibility_date": "2025-10-15",
+  "compatibility_date": "2025-10-16",
   "assets": {
-    "directory": ".next"
+    "directory": "./dist"
   }
 }
